@@ -5,7 +5,8 @@ var icon
 var humidity
 var wind
 var direction
-//var submit
+var submit
+var savebtn
 
 function update (weather) {
   icon.src = 'imgs/codes/' + weather.code + '.png'
@@ -24,7 +25,7 @@ window.onload = function () {
   wind = document.getElementById('wind')
   direction = document.getElementById('direction')
   submit = document.getElementById('btn')
-
+  savebtn = document.getElementById('save')
     /* NEW */
   if (!navigator.geolocation) {
     var showPosition = function (position) {
@@ -37,16 +38,12 @@ window.onload = function () {
   //   updateByZip(zip)
   // }
    else {
-
      submit.addEventListener('click', function () {
       var input = document.getElementById('city')
-      var cityName= input.value
+      var cityName = input.value
       console.log(cityName)
       updateByQuery(cityName)
     })
-
-    //var cityName = window.prompt('Where you at?')
-    //updateByQuery(cityName)
   }
 }
 
@@ -88,6 +85,7 @@ function sendRequest (url) {
 	    /* NEW */
 	    weather.temp = K2F(data.main.temp)
 	    update(weather)
+      saveCity(weather)
     }
   }
 
@@ -100,15 +98,15 @@ function degreesToDirection (degrees) {
   var low = 360 - range / 2
   var high = (low + range) % 360
   var angles = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW']
-  for (i in angles) {
-    if (degrees >= low && degrees < high) {
-	    console.log(angles[i])
-	    return angles[i]
-	    console.log('derp')
-    }
-    low = (low + range) % 360
-    high = (high + range) % 360
+for (var i = 0; i < angles.length; i++) {
+  if (degrees >= low && degrees < high) {
+    console.log(angles[i])
+    return angles[i]
+    console.log('derp')
   }
+  low = (low + range) % 360
+  high = (high + range) % 360
+}
   return 'N'
 }
 
@@ -120,4 +118,19 @@ function K2C (k) {
   return Math.round(k - 273.15)
 }
 
-// find city
+// add city to list
+
+function saveCity (weather) {
+  savebtn.addEventListener('click', function () {
+    //var results = document.getElementById('results')
+    var myList = document.getElementById('myList')
+    var list = document.createElement('LI')
+    var json = JSON.stringify(weather)
+
+    list.innerHTML = json
+    myList.appendChild(list)
+
+  })
+}
+
+//store API response
