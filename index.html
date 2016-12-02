@@ -1,50 +1,127 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <title>Weather App</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <link rel="stylesheet" type="text/css" href="styles.css" />
 
-  </head>
-  <body>
-<header>
-  <label for="">City</label>
-  <input type="text" name="city" placeholder="Where ya goin?" id="city"/>
-  <button type="submit" name="btn" id="btn">Submit</button>
-</header>
+    <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase.js"></script>
+</head>
+
+<body>
+    <!-- Search City bar -->
+    <header>
+        <label for="">City</label>
+        <input type="text" name="city" placeholder="Where ya goin?" id="city" />
+        <button type="submit" name="btn" id="btn">Submit</button>
+    </header>
+
+    <!-- current weather  -->
     <div class="weather-app">
-      <div class="left">
-	<div class="temperature"><span id="temperature">0</span>&deg;</div>
-	<div class="location"><span id="location">Unknown</span></div>
-  <div class="save"><span id="save">
+        <div class="left">
+            <div class="temperature"><span id="temperature">0</span>&deg;</div>
+            <div class="location"><span id="location">Unknown</span></div>
+            <div class="save"><span id="save">
     <button type="submit" name="save">Save</button></span>
 
-  </div>
-      </div>
-      <div class="right">
-	<div class="top">
-	  <img id="icon" width="75px" src="imgs/codes/200.png" />
-	</div>
+            </div>
+        </div>
+        <div class="right">
+            <div class="top">
+                <img id="icon" width="75px" src="imgs/codes/200.png" />
+            </div>
 
-	  <div class="bottom">
+            <div class="bottom">
 
-	  <div class="humidity">
-	    <img src="imgs/humidity.png" height="16px" />
-	    <span id="humidity">0</span>%
-	  </div>
+                <div class="humidity">
+                    <img src="imgs/humidity.png" height="16px" />
+                    <span id="humidity">0</span>%
+                </div>
 
-	  <div class="wind">
-	    <span id="wind">0</span> mph <span id="direction">N</span>
-	  </div>
+                <div class="wind">
+                    <span id="wind">0</span> mph <span id="direction">N</span>
+                </div>
 
-	</div>
-      </div>
+            </div>
+        </div>
     </div>
-    <div id="results">
-      <ul id="myList">
 
-      </ul>
+    <!-- Weather forecast -->
+    <div class="container">
 
+        <div class="row">
+            <div class="span4 offset 3">
+                <h2>Weather App</h2>
+                <p>Enter city name to get the weather forecast</p>
+            </div>
+            <div class="span6  offset1"><input class="span4" type="text" placeholder="Enter the city name" id="city-name" value="" />
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="span6 offset1"><input type="button" class="btn-primary btn btn-metric" value="Get forecast in metric" />
+                <div class="span6 offset1"><input type="button" class="btn-danger btn btn-imperial" value="Get forecast in imperial" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="span6 offset1">
+                    <div id="log">Nothing to show yet</div>
+                </div>
+            </div>
+
+            <div class="row">
+                <hr/>
+                <p>Shamim Bhagat 2016 (<a href="http://www.linkedin.com/shamim1987">@Sham_B</a>)</p>
+            </div>
+
+        </div>
     </div>
-<script type="text/javascript" src="app.js"></script>
-  </body>
+    <script type="text/javascript">
+        /*
+          // Initialize Firebase
+          var config = {
+            apiKey: "AIzaSyDetsWY2WEsxPVrWMrWfwi_76ddUVup1SU",
+            authDomain: "travel-weather-1480309624931.firebaseapp.com",
+            databaseURL: "https://travel-weather-1480309624931.firebaseio.com",
+            storageBucket: "travel-weather-1480309624931.appspot.com",
+            messagingSenderId: "1049911185636"
+          };
+          firebase.initializeApp(config)
+
+          var fire = document.getElementById('fire')
+          var database = firebase.database()
+          var object = document.getElementById('object')
+          var uL = document.getElementById('list')
+          var dbRefObj = database.ref().child('object')
+          var dbRefList = dbRefObj.child('hobbies')
+          //sync obj changes
+          dbRefObj.on('value', snap => {
+            object.innerText = JSON.stringify(snap.val(), null, 4)
+          })
+
+          //sync list changes
+          dbRefList.on('child_added', snap => {
+            var li = document.createElement('li')
+            li.innerText = snap.val()
+            uL.appendChild(li)
+
+          })
+
+          */
+    </script>
+    <script src="weatherforecast.js" charset="utf-8"></script>
+    <script type="text/javascript" src="weather.js"></script>
+</body>
+
 </html>
