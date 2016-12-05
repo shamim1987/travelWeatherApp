@@ -1,0 +1,13 @@
+// set up a new reference to your firebase app
+var myFirebaseRef = new Firebase("https://app-name.firebaseio.com/");
+
+// use the .set() method to add data in the form of an object
+myFirebaseRef.set({name: "adam"});
+
+myFirebaseRef.set({comment: [{name: "adam"},{name: "john"}]});
+
+// sets up a reference to your comments child node
+var myCommentsRef = new Firebase("https://app-name.firebaseio.com/comments/");
+
+// this uses the .child() method to set data
+myFirebaseRef.child('news').set({story: "title this"});

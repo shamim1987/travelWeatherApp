@@ -81,7 +81,6 @@ function sendRequest (url) {
         // console.log( el.getAttribute('data-weather').location)
     }
   }
-
   xmlhttp.open('GET', url, true)
   xmlhttp.send()
 }
