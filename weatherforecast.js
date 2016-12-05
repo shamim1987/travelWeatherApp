@@ -1,6 +1,6 @@
 var openWeatherAppId = '9fa53fa43aee027ccddf17a69acbea83',
   openWeatherUrl = 'http://api.openweathermap.org/data/2.5/forecast'
-
+/*
   // Initialize Firebase
 var config = {
   apiKey: 'AIzaSyDetsWY2WEsxPVrWMrWfwi_76ddUVup1SU',
@@ -10,21 +10,22 @@ var config = {
   messagingSenderId: '1049911185636'
 }
 firebase.initializeApp(config)
+*/
 var cityList = document.getElementById('cityList')
 var wrapper = document.getElementById('wrapper')
-var database = firebase.database()
-var cityWeatherRefObj = database.ref().child('cityWeather')
-var cityNameRefObj = cityWeatherRefObj.child('cityName')
-var cityName = cityNameRefObj.child('')
-var comment = cityName.child('comment'),
-  author = comment.child('author'),
-  body = comment.child('body')
-var dateTime = cityName.child(''),
-  condition = dateTime.child('condition'),
-  temperature = dateTime.child('temperature'),
-  wind = dateTime.child('wind')
+//var database = firebase.database()
+//var cityWeatherRefObj = database.ref().child('cityWeather')
+//var cityNameRefObj = database.ref().child(cityName)
+//var cityName = cityNameRefObj.child('')
+//var comment// = cityNameRefObj.child('comment'),
+  //author = comment.child('author'),
+  //title = comment.child('title'),
+  //body = comment.child('body')
+//var dateTime// = cityNameRefObj.child(date),
+  //condition = dateTime.child('condition'),
+  //temperature = dateTime.child('temperature'),
+  //wind = dateTime.child('wind')
   // var dbRefList = dbRefObj.child('hobbies')
-
 
 var prepareData = function (units) {
     // Replace loading image
@@ -69,25 +70,49 @@ function fetchData (forecast) {
 
   selectedCity += '<h3> Weather Forecast for ' + cityName + ', ' + country + '</h3>'
   forecast.list.forEach(function (forecastEntry) {
-    selectedCity += '<tr>' + '<td>' + forecastEntry.dt_txt + '</td>' + '<td>' + forecastEntry.main.humidity + '</td>' +
-     '<td>' + forecastEntry.main.temp + '</td>' + '</tr>'
+    var date = forecastEntry.dt_txt
+    var temperature = forecastEntry.main.temp
+    selectedCity += '<tr>' + '<td>' + date + '</td>'  +
+     '<td>'  + temperature + '</td>' + '</tr>'
   })
   var savebutn = $('<button/>', {
     id: 'save',
     text: 'Save City',
     click: function () {
       console.log('it works')
-      // sync city weather ref obj changes
-    dbRefObj.on('value', snap => {
-      object.innerText = JSON.stringify(snap.val(), null, 4)
-    })
+      // Initialize Firebase
+    var config = {
+      apiKey: 'AIzaSyDetsWY2WEsxPVrWMrWfwi_76ddUVup1SU',
+      authDomain: 'travel-weather-1480309624931.firebaseapp.com',
+      databaseURL: 'https://travel-weather-1480309624931.firebaseio.com',
+      storageBucket: 'travel-weather-1480309624931.appspot.com',
+      messagingSenderId: '1049911185636'
+    }
+    firebase.initializeApp(config)
+      // add city to DB
+      var database = new Firebase("https://travel-weather-1480309624931.firebaseio.com/")
+      var savedCity = function(){
+        database.set(cityName)
+        forecast.forEach(function(forecastEntry) {
+          var savedDate =savedCity.set(date)
+          savedDate.child('Temp').set(temperature)
+        })
+      }
+      //get city from DB
+var fetchedData = JSON.parse(database.get(savedCity))
 
-      // sync list changes
-    dbRefList.on('child_added', snap => {
+      //render data to page
+
+      //cityWeatherRefObj.on('value', snap => { cityList.innerText = JSON.stringify(snap.val(), null, 4)})
+    //dbRefObj.on('value', snap => { object.innerText = JSON.stringify(snap.val(), null, 4)})
+
+      // sync DB
+
+  /*  dbRefList.on('child_added', snap => {
       var li = document.createElement('li')
       li.innerText = snap.val()
       uL.appendChild(li)
-    })
+    }) */
 
     }
   })
