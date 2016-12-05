@@ -84,18 +84,33 @@ function fetchData (forecast) {
       // add city to DB
       var database = firebase.database()
       var savedCity = database.ref().child(cityName)
-
       forecast.list.forEach(function (forecastEntry) {
         var date = forecastEntry.dt_txt
         var temperature = forecastEntry.main.temp
+        var humidity = forecastEntry.main.humidity
         var savedDate = savedCity.child(date)
-        var savedTemp = savedDate.child('Temp').set(temperature)
+        var savedTemp = savedDate.child('Temp').push(temperature)
+        var savedHumid = savedDate.child('Humid').push(humidity)
       })
 
       // get city from DB
-// var fetchedData = JSON.parse(database.get(savedCity))
+      var uL = document.getElementById('cityList')
+      var wrapper = document.getElementById('wrapper')
+      var cityRef = database.ref()
+      // console.log(cityRef)
+      cityRef.on('value', function (snapshot) {
+        console.log(snapshot)
+          wrapper.innerText = JSON.stringify(snapshot.val(), null, 3)
+      })
 
       // render data to page
+
+      savedCity.on('child_added', function (snapshot) {
+          var li = document.createElement('li')
+          li.innerText = snapshot.val()
+          uL.appendChild(li)
+
+      })
 
       // cityWeatherRefObj.on('value', snap => { cityList.innerText = JSON.stringify(snap.val(), null, 4)})
     // dbRefObj.on('value', snap => { object.innerText = JSON.stringify(snap.val(), null, 4)})

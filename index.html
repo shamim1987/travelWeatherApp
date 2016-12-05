@@ -8,11 +8,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="/full-width-pics.css">
 
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
-    <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 
     <link rel="stylesheet" type="text/css" href="styles.css" />
 
@@ -31,7 +28,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-                <a class="navbar-brand" href="#">Start Bootstrap</a>
+                <a class="navbar-brand" href="#">Travel Weather</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -108,29 +105,30 @@
                     <h1 class="section-heading">Extra!Extra! Get ya forecast here.</h1>
                     <div class="row">
                         <div class="span4 offset 3">
-                            <h2>Weather App</h2>
                             <p>Enter city name to get the weather forecast</p>
+                            <input class="span4" type="text" placeholder="Enter the city name" id="city-name" value="" />
                         </div>
-                        <div class="span6  offset1"><input class="span4" type="text" placeholder="Enter the city name" id="city-name" value="" />
-                        </div>
-
                     </div>
                     <div class="row">
-                        <div class="span6 offset1"><input type="button" class="btn-primary btn btn-metric" value="Get forecast in metric" />
-                            <div class="span6 offset1"><input type="button" class="btn-danger btn btn-imperial" value="Get forecast in imperial" />
-                            </div>
+                        <div class="span6 offset1"><input type="button" class="btn-primary btn btn-metric" value="Get forecast in metric" /></div>
+                        <div class="span6 offset1"><input type="button" class="btn-danger btn btn-imperial" value="Get forecast in imperial" /></div>
                         </div>
 
                         <div class="row">
                             <div class="span6 offset1">
                                 <table id="log"></table>
+                                <div id ="wrapper">
+                                  <ul id="cityList">
+
+                                  </ul>
+                                </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <!-- /.row -->
-        </div>
         <!-- /.container -->
     </section>
     <!-- Footer -->
@@ -146,41 +144,10 @@
         </div>
         <!-- /.container -->
     </footer>
-
-
-    <script type="text/javascript">
-        /*
-                                  // Initialize Firebase
-                                  var config = {
-                                    apiKey: "AIzaSyDetsWY2WEsxPVrWMrWfwi_76ddUVup1SU",
-                                    authDomain: "travel-weather-1480309624931.firebaseapp.com",
-                                    databaseURL: "https://travel-weather-1480309624931.firebaseio.com",
-                                    storageBucket: "travel-weather-1480309624931.appspot.com",
-                                    messagingSenderId: "1049911185636"
-                                  };
-                                  firebase.initializeApp(config)
-
-                                  var fire = document.getElementById('fire')
-                                  var database = firebase.database()
-                                  var object = document.getElementById('object')
-                                  var uL = document.getElementById('list')
-                                  var dbRefObj = database.ref().child('object')
-                                  var dbRefList = dbRefObj.child('hobbies')
-                                  //sync obj changes
-                                  dbRefObj.on('value', snap => {
-                                    object.innerText = JSON.stringify(snap.val(), null, 4)
-                                  })
-
-                                  //sync list changes
-                                  dbRefList.on('child_added', snap => {
-                                    var li = document.createElement('li')
-                                    li.innerText = snap.val()
-                                    uL.appendChild(li)
-
-                                  })
-
-                                  */
-    </script>
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase.js"></script>
     <script src="weatherforecast.js" charset="utf-8"></script>
     <script type="text/javascript" src="weather.js"></script>
