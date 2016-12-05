@@ -38,14 +38,30 @@ function getData (url, cityName, appId, units) {
 }
 function fetchData (forecast) {
   console.log(forecast)
-  var html = '',
+  var selectedCity = '',
     cityName = forecast.city.name,
     country = forecast.city.country
 
-  html += '<h3> Weather Forecast for ' + cityName + ', ' + country + '</h3>'
-  forecast.list.forEach(function (forecastEntry, index, list) {
-    html += '<p>' + forecastEntry.dt_txt + ': ' + forecastEntry.main.temp + '</p>'
+  selectedCity += '<h3> Weather Forecast for ' + cityName + ', ' + country + '</h3>'
+  forecast.list.forEach(function (forecastEntry) {
+    selectedCity += '<tr>' + '<td>' + forecastEntry.dt_txt + '</td>' + '<td>' + forecastEntry.main.humidity + '</td>' +
+     '<td>' + forecastEntry.main.temp + '</td>' + '</tr>'
+  })
+  var savebutn = $('<button/>', {
+    id: 'save',
+    text: 'Save City',
+    click:function(){
+      alert('it works')
+    }
   })
 
-  $('#log').html(html)
+  $('#log').html(selectedCity)
+  $('#log').append(savebutn)
 }
+/*
+function saveCity () {
+  saveCity = $('#save').click(function(){
+
+  })
+}
+*/
