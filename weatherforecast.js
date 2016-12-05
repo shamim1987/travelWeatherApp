@@ -1,6 +1,6 @@
 var openWeatherAppId = '9fa53fa43aee027ccddf17a69acbea83',
   openWeatherUrl = 'http://api.openweathermap.org/data/2.5/forecast'
-/*
+
   // Initialize Firebase
 var config = {
   apiKey: 'AIzaSyDetsWY2WEsxPVrWMrWfwi_76ddUVup1SU',
@@ -10,7 +10,7 @@ var config = {
   messagingSenderId: '1049911185636'
 }
 firebase.initializeApp(config)
-*/
+
 var cityList = document.getElementById('cityList')
 var wrapper = document.getElementById('wrapper')
 // var database = firebase.database()
@@ -80,15 +80,7 @@ function fetchData (forecast) {
     text: 'Save City',
     click: function () {
       console.log('it works')
-      // Initialize Firebase
-      var config = {
-        apiKey: 'AIzaSyDetsWY2WEsxPVrWMrWfwi_76ddUVup1SU',
-        authDomain: 'travel-weather-1480309624931.firebaseapp.com',
-        databaseURL: 'https://travel-weather-1480309624931.firebaseio.com',
-        storageBucket: 'travel-weather-1480309624931.appspot.com',
-        messagingSenderId: '1049911185636'
-      }
-      firebase.initializeApp(config)
+
       // add city to DB
       var database = firebase.database()
       var savedCity = database.ref().child(cityName)
