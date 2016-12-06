@@ -1,7 +1,7 @@
 var openWeatherAppId = '9fa53fa43aee027ccddf17a69acbea83',
   openWeatherUrl = 'http://api.openweathermap.org/data/2.5/forecast'
 
-  // Initialize Firebase
+// Initialize Firebase
 var config = {
   apiKey: 'AIzaSyDetsWY2WEsxPVrWMrWfwi_76ddUVup1SU',
   authDomain: 'travel-weather-1480309624931.firebaseapp.com',
@@ -10,22 +10,22 @@ var config = {
   messagingSenderId: '1049911185636'
 }
 firebase.initializeApp(config)
+var database = firebase.database()
+var savingCity = database.ref().child('Cities')
 
-var cityList = document.getElementById('cityList')
-var wrapper = document.getElementById('wrapper')
 // var database = firebase.database()
 // var cityWeatherRefObj = database.ref().child('cityWeather')
 // var cityNameRefObj = database.ref().child(cityName)
 // var cityName = cityNameRefObj.child('')
 // var comment// = cityNameRefObj.child('comment'),
-  // author = comment.child('author'),
-  // title = comment.child('title'),
-  // body = comment.child('body')
+// author = comment.child('author'),
+// title = comment.child('title'),
+// body = comment.child('body')
 // var dateTime// = cityNameRefObj.child(date),
-  // condition = dateTime.child('condition'),
-  // temperature = dateTime.child('temperature'),
-  // wind = dateTime.child('wind')
-  // var dbRefList = dbRefObj.child('hobbies')
+// condition = dateTime.child('condition'),
+// temperature = dateTime.child('temperature'),
+// wind = dateTime.child('wind')
+// var dbRefList = dbRefObj.child('hobbies')
 
 var prepareData = function (units) {
     // Replace loading image
@@ -63,80 +63,73 @@ function getData (url, cityName, appId, units) {
   })
 }
 function fetchData (forecast) {
-  console.log(forecast)
+  // console.log(forecast)
   var selectedCity = '',
     cityName = forecast.city.name,
     country = forecast.city.country
 
   selectedCity += '<h3> Weather Forecast for ' + cityName + ', ' + country + '</h3>'
   forecast.list.forEach(function (forecastEntry) {
-    //console.log(forecastEntry)
+        // console.log(forecastEntry)
     var date = forecastEntry.dt_txt
     var temperature = forecastEntry.main.temp
-    selectedCity += '<tr>' + '<td>' + date + '</td>' +
-     '<td>' + temperature + '</td>' + '</tr>'
+    selectedCity += '<tr>' + '<td>' + date + '</td>' + '<td>' + temperature + '</td>' + '</tr>'
   })
-  var savebutn = $('<button/>', {
+  var $savebutn = $('<button/>', {
     id: 'save',
     text: 'Save City',
     click: function () {
-      console.log('it works')
-
-      // add city to DB
-      var database = firebase.database()
-      var savingCity = database.ref().child('Cities')
+    // add city to DB
       var savedCity = savingCity.child(cityName)
+      // check if city has alr been saved
+      savedCity.on('value', function () {
+        // console.log(searchCity.val())
+        console.log('data from database searching for ' + cityName)
+        if (cityName == !null) {
+          alert('You saved this city already bruh')
+        } else {
+          alert('City Added!')
+        }
+      })
       forecast.list.forEach(function (forecastEntry) {
         var date = forecastEntry.dt_txt
         var temperature = forecastEntry.main.temp
-        //var humidity = forecastEntry.main.humidity
+      // var humidity = forecastEntry.main.humidity
         var savedDate = savedCity.child(date)
         var savedTemp = savedDate.child('Temp').push(temperature)
-        //var savedHumid = savedDate.child('Humid').push(humidity)
+      // var savedHumid = savedDate.child('Humid').push(humidity)
+      })
+      var cityTable = document.getElementById('cityList')
+      savedCity.on('value', function (dateSnapshot) {
+        //console.log(dateSnapshot.val())
+        for (var dateSnap in dateSnapshot.val()) {
+          //console.log('date is ' + dateSnap)
+          var tR = document.createElement('tr')
+          var tD1 = document.createElement('td')
+          tD1.innerText = dateSnap
+          tR.appendChild(tD1)
+          cityTable.appendChild(tR)
+          for (var variable in dateSnapshot.val()[dateSnap]) {
+           // console.log('var is ' + dateSnapshot.val()[dateSnap][variable]);
+            for (var tempSnapshot in dateSnapshot.val()[dateSnap][variable]) {
+              console.log('Temp is' + dateSnapshot.val()[dateSnap][variable][tempSnapshot])
+              var tD2 = document.createElement('td')
+              tD2.innerText = dateSnapshot.val()[dateSnap][variable][tempSnapshot]
+              tR.appendChild(tD2)
+              cityTable.appendChild(tR)
+            }
+          }
+        }
       })
 
-      // get city from DB
-      var uL = document.getElementById('cityList')
-      //var wrapper = document.getElementById('wrapper')
-      //var cityRef = database.ref()
-      // console.log(cityRef)
-      //cityRef.on('value', function (snapshot) {
-        //console.log(snapshot)
-          //wrapper.innerText = JSON.stringify(snapshot.val(), null, 3)
-      //})
-
-      // render data to page
-
-      savedCity.once('value', function (snapshot) {
-        snapshot.forEach(function(snap){
-          console.log(snap.val().Temp)
-          var li = document.createElement('li')
-          for (var key in snap.val().Temp) {
-            console.log(snap.val().Temp[key])
-          }
-        })
-    })
-
-      // cityWeatherRefObj.on('value', snap => { cityList.innerText = JSON.stringify(snap.val(), null, 4)})
-    // dbRefObj.on('value', snap => { object.innerText = JSON.stringify(snap.val(), null, 4)})
-
-      // sync DB
-
-  /*  dbRefList.on('child_added', snap => {
+            /*  dbRefList.on('child_added', snap => {
       var li = document.createElement('li')
       li.innerText = snap.val()
       uL.appendChild(li)
     }) */
     }
+    // $('#cityList').append(cityWeather)
   })
-
   $('#log').html(selectedCity)
-  $('#log').append(savebutn)
+  $('#log').append($savebutn)
 }
-/*
-function saveCity () {
-  saveCity = $('#save').click(function(){
-
-  })
-}
-*/
