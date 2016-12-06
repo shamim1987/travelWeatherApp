@@ -108,12 +108,12 @@ function fetchData (forecast) {
       // render data to page
 
       savedCity.once('value', function (snapshot) {
-
         snapshot.forEach(function(snap){
-          console.log(snap.val())
+          console.log(snap.val().Temp)
           var li = document.createElement('li')
-          li.innerText = JSON.stringify(snap.val(),null,4)
-          uL.appendChild(li)
+          for (var key in snap.val().Temp) {
+            console.log(snap.val().Temp[key])
+          }
         })
     })
 
