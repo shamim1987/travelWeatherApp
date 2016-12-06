@@ -81,11 +81,13 @@ function fetchData (forecast) {
     click: function () {
     // add city to DB
       var savedCity = savingCity.child(cityName)
-      // check if city has alr been saved
-      savedCity.on('value', function () {
+
+      //check if city has alr been saved
+      savedCity.on('value', function (snapshot) {
         // console.log(searchCity.val())
         console.log('data from database searching for ' + cityName)
-        if (cityName == !null) {
+        console.log(snapshot.val())
+        if (cityName == '') {
           alert('You saved this city already bruh')
         } else {
           alert('City Added!')
@@ -94,41 +96,33 @@ function fetchData (forecast) {
       forecast.list.forEach(function (forecastEntry) {
         var date = forecastEntry.dt_txt
         var temperature = forecastEntry.main.temp
-      // var humidity = forecastEntry.main.humidity
-        var savedDate = savedCity.child(date)
-        var savedTemp = savedDate.child('Temp').push(temperature)
-      // var savedHumid = savedDate.child('Humid').push(humidity)
+       var humidity = forecastEntry.main.humidity
+        var savedDate = savedCity.child(date).set({
+          temperature: temperature,
+          humidity: humidity
+        })
       })
       var cityTable = document.getElementById('cityList')
+
+//get city from DB
       savedCity.on('value', function (dateSnapshot) {
-        //console.log(dateSnapshot.val())
         for (var dateSnap in dateSnapshot.val()) {
-          //console.log('date is ' + dateSnap)
           var tR = document.createElement('tr')
           var tD1 = document.createElement('td')
           tD1.innerText = dateSnap
           tR.appendChild(tD1)
           cityTable.appendChild(tR)
-          for (var variable in dateSnapshot.val()[dateSnap]) {
-           // console.log('var is ' + dateSnapshot.val()[dateSnap][variable]);
-            for (var tempSnapshot in dateSnapshot.val()[dateSnap][variable]) {
-              console.log('Temp is' + dateSnapshot.val()[dateSnap][variable][tempSnapshot])
+            for (var tempSnapshot in dateSnapshot.val()[dateSnap]) {
               var tD2 = document.createElement('td')
-              tD2.innerText = dateSnapshot.val()[dateSnap][variable][tempSnapshot]
+              tD2.innerText = dateSnapshot.val()[dateSnap][tempSnapshot]
               tR.appendChild(tD2)
               cityTable.appendChild(tR)
             }
-          }
+
         }
       })
 
-            /*  dbRefList.on('child_added', snap => {
-      var li = document.createElement('li')
-      li.innerText = snap.val()
-      uL.appendChild(li)
-    }) */
     }
-    // $('#cityList').append(cityWeather)
   })
   $('#log').html(selectedCity)
   $('#log').append($savebutn)
