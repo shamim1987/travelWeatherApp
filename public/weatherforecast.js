@@ -1,5 +1,5 @@
 var openWeatherAppId = '9fa53fa43aee027ccddf17a69acbea83',
-  openWeatherUrl = 'https://crossorigin.me/http://api.openweathermap.org/data/2.5/forecast'
+  openWeatherUrl = 'http://api.openweathermap.org/data/2.5/forecast'
 
 alert(openWeatherUrl)
 

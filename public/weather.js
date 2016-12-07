@@ -44,7 +44,7 @@ window.onload = function () {
 /* NEW */
 
 function updateByGeo (lat, lon) {
-  var url = 'https://crossorigin.me/http://api.openweathermap.org/data/2.5/weather?' +
+  var url = 'http://api.openweathermap.org/data/2.5/weather?' +
 	'lat=' + lat +
 	'&lon=' + lon +
 	'&APPID=' + APPID
@@ -52,7 +52,7 @@ function updateByGeo (lat, lon) {
 }
 
 function updateByQuery (cityName) {
-  var url = 'https://crossorigin.me/http://api.openweathermap.org/data/2.5/weather?q=' +
+  var url = 'http://api.openweathermap.org/data/2.5/weather?q=' +
   cityName + '&APPID=' + APPID
   sendRequest(url)
 }
